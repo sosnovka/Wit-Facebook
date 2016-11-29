@@ -91,3 +91,73 @@ if (require.main === module) {
   const client = getWit();
   client.interactive();
 }
+
+
+
+// generic function sending messages
+function sendMessage(recipientId, message) {
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        method: 'POST',
+        json: {
+            recipient: {id: recipientId},
+            message: message,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending message: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    });
+};
+
+
+// send rich message with kitten
+function kittenMessage(recipientId, text) {
+    
+    text = text || "";
+    var values = text.split(' ');
+    
+    if (values.length === 1 && values[0] === 'penta') {
+
+            
+            var imageUrl = "http://www.pentafiles.com/wp-content/uploads/2014/05/penta-moskha-color-feature-2000.jpg";
+            
+            message = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Penta",
+                            "subtitle": "Full-on and Darkpsy producer",
+                            "image_url": imageUrl ,
+                            "buttons": [{
+                                "type": "web_url",
+                                "url": imageUrl,
+                                "title": "Show Penta"
+                                }, {
+                                "type": "web_url",
+                                "url": "http://www.pentafiles.com",
+                                "title": "Official Website"
+                                }, {
+                                "type": "postback",
+                                "title": "I like this",
+                                "payload": "User " + recipientId + " likes Penta " + imageUrl,
+                            }]
+                        }]
+                    }
+                }
+            };
+    
+            sendMessage(recipientId, message);
+            
+            return true;
+
+    }
+    
+    return false;
+    
+};

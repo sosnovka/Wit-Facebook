@@ -12,7 +12,10 @@
   "license": "MIT",
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "unmockedModulePathPatterns": ["core-js/.*", "sshpk/.*"]
+    "unmockedModulePathPatterns": [
+      "core-js/.*",
+      "sshpk/.*"
+    ]
   },
   "dependencies": {
     "body-parser": "^1.15.0",
@@ -33,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/hunkim/Wit-Facebook/issues"
   },
-  "homepage": "https://github.com/hunkim/Wit-Facebook#readme"
+  "homepage": "https://github.com/hunkim/Wit-Facebook#readme",
+  "devDependencies": {
+    "jest": "^17.0.3"
+  }
 }
